@@ -1,0 +1,9 @@
+.venv/
+.deps/
+__pycache__/
+*.pyc
+config/credentials.ini
+output/
+cases/
+watch/
+.DS_Store

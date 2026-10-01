@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Osinsta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,550;9..144,700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="rail">
+      <a class="brand" href="/">
+        <div class="mark">O</div>
+        <div>
+          <h1>Osinsta</h1>
+          <p>Instagram investigation workspace</p>
+        </div>
+      </a>
+
+      <div class="quota">
+        <a class="quota-item key-link" href="/settings" title="Edit HikerAPI key">
+          <span>API key</span>
+          <code id="token-masked">not set</code>
+        </a>
+        <div class="quota-item">
+          <span>Requests left</span>
+          <strong id="req-left">—</strong>
+          <em id="req-amount"></em>
+        </div>
+        <button type="button" class="btn ghost" id="btn-refresh-bal">Refresh</button>
+        <span id="status" class="pill">checking…</span>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <section class="stage">
+        <div class="target-card">
+          <div class="target-main">
+            <label for="target">Target account</label>
+            <div class="target-row">
+              <span class="at">@</span>
+              <input id="target" type="text" placeholder="username" autocomplete="off" />
+            </div>
+          </div>
+
+          <div class="mode-block">
+            <span class="field-label">Account visibility</span>
+            <div class="mode-switch" role="group" aria-label="Account visibility">
+              <button type="button" class="mode-btn active" data-mode="public">
+                <strong>Public</strong>
+                <small>Full toolkit</small>
+              </button>
+              <button type="button" class="mode-btn" data-mode="private">
+                <strong>Private</strong>
+                <small>Safe lookups only</small>
+              </button>
+            </div>
+          </div>
+
+          <div class="case-pick">
+            <label for="active-case">Save into case</label>
+            <select id="active-case">
+              <option value="">None</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="tools-head">
+          <div>
+            <h2>Lookups <span id="sel-count"></span></h2>
+            <p id="mode-hint">Choose one or more cards, then run them together into one report.</p>
+          </div>
+          <div class="tools-actions">
+            <input id="filter" type="search" placeholder="Search lookups…" />
+            <button type="button" class="btn ghost" id="btn-select-all">Select all</button>
+            <button type="button" class="btn ghost" id="btn-clear">Clear</button>
+            <button type="button" class="btn primary" id="btn-run" disabled>Run selected</button>
+          </div>
+        </div>
+
+        <div id="commands" class="lookup-board"></div>
+      </section>
+
+      <aside class="results-pane">
+        <div class="results-head">
+          <h2>Investigation report</h2>
+          <span id="meta" class="meta"></span>
+        </div>
+        <div id="results" class="results">
+          <div class="empty-state">
+            <strong>No report yet</strong>
+            <p>Select lookups and press <em>Run selected</em>. Results appear as one report.</p>
+          </div>
+        </div>
+        <div class="report-actions" id="report-actions" hidden>
+          <button type="button" class="btn primary" id="btn-download-html">Download report (HTML)</button>
+          <button type="button" class="btn ghost" id="btn-download-json">Download JSON</button>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <div id="tooltip" class="tooltip" hidden></div>
+  <script src="/static/app.js"></script>
+</body>
+</html>

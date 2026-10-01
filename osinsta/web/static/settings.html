@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Osinsta · API key</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,550;9..144,700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="app narrow">
+    <header class="rail">
+      <a class="brand" href="/">
+        <div class="mark">O</div>
+        <div>
+          <h1>Osinsta</h1>
+          <p>API key settings</p>
+        </div>
+      </a>
+      <a class="btn ghost" href="/">← Back to workspace</a>
+    </header>
+
+    <section class="settings-card">
+      <h2>HikerAPI key</h2>
+      <p class="lede">Update, verify, and save your key. It stays on this machine only.</p>
+
+      <div class="settings-grid">
+        <div>
+          <label class="field-label">Current key (masked)</label>
+          <code id="token-masked" class="mask-block">not set</code>
+        </div>
+        <div>
+          <label class="field-label">Requests remaining</label>
+          <div class="bal-line"><strong id="req-left">—</strong> <em id="req-amount"></em></div>
+        </div>
+      </div>
+
+      <label class="field-label" for="token">New / replacement key</label>
+      <input id="token" type="password" placeholder="Paste HikerAPI token" autocomplete="off" />
+
+      <div class="settings-actions">
+        <label class="check"><input id="save-token" type="checkbox" checked /> Save to config/credentials.ini</label>
+        <button type="button" class="btn ghost" id="btn-verify">Verify only</button>
+        <button type="button" class="btn primary" id="btn-save">Verify &amp; update</button>
+      </div>
+      <p id="token-msg" class="msg"></p>
+    </section>
+  </div>
+  <script src="/static/settings.js"></script>
+</body>
+</html>
