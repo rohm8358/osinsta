@@ -1,7 +1,7 @@
 # Osinsta
 
 <p align="center">
-  <img src="assets/banner.gif" alt="Osinsta — Instagram Investigation Workspace" width="100%">
+  <img src="assets/banner.jpg" alt="Osinsta — Advanced Instagram OSINT Workspace" width="100%">
 </p>
 
 <p align="center">
@@ -11,24 +11,83 @@
 
 <p align="center">
   <a href="#quick-start"><img src="https://img.shields.io/badge/python-3.10%2B-1d4ed8?style=flat-square" alt="Python"></a>
-  <a href="#features"><img src="https://img.shields.io/badge/lookups-42-2563eb?style=flat-square" alt="Lookups"></a>
-  <a href="#license"><img src="https://img.shields.io/badge/license-MIT-0ea5e9?style=flat-square" alt="License"></a>
+  <a href="#osinsta-vs-osintgram"><img src="https://img.shields.io/badge/vs-Osintgram-2563eb?style=flat-square" alt="Vs Osintgram"></a>
+  <a href="#how-to-get-a-hikerapi-token"><img src="https://img.shields.io/badge/HikerAPI-setup-0ea5e9?style=flat-square" alt="HikerAPI"></a>
+  <a href="#license"><img src="https://img.shields.io/badge/license-MIT-64748b?style=flat-square" alt="License"></a>
 </p>
 
 ---
 
 ## Why Osinsta
 
-Osinsta is built for investigators who want **Osintgram-style Instagram OSINT** with a cleaner workflow:
+Osinsta keeps the useful Instagram OSINT ideas from tools like Osintgram, then rebuilds the workflow for real investigations:
 
 - **No Instagram username/password** — HikerAPI key only
-- **Multi-select commands** → one investigation report
-- **Public / Private mode** filters what you can safely run
-- **Human-readable lookups** (not machine method names)
+- **Multi-select lookups** → one clean investigation report
+- **Public / Private mode** shows only commands that make sense for that account
+- **Human-readable lookup names** (not `get_user_info`-style machine labels)
 - **Downloadable HTML/JSON reports**
-- **Case board**, watch/diff, risk score, contacts pack, timeline, geo clusters
+- **Advanced modules** Osintgram doesn’t focus on: case board, watch/diff, risk score, contacts pack, timeline fusion, geo clusters, caption intel, cost planner
 
-> Private DMs, live GPS, and secret login email/phone are **not** supported.
+> Private DMs, live GPS, and secret login/recovery email or phone are **not** supported.
+
+---
+
+## Osinsta vs Osintgram
+
+| | **Osintgram** | **Osinsta** |
+|---|---|---|
+| Auth to start | HikerAPI **or** Instagram login (instagrapi) | **HikerAPI only** — no IG username/password |
+| Command UX | Machine-style command list / AI picker | Human labels + hover descriptions + multi-select cards |
+| Private accounts | Many commands hard-stop on private | **Private mode** keeps private-safe lookups available |
+| Running lookups | Usually one flow / selected tools | Select **many lookups at once** |
+| Results | Cards / tool outputs | **Single investigation report** + download HTML/JSON |
+| API key UX | Paste key in UI | Masked key in header + dedicated **settings page** to verify/update |
+| Quota visibility | Balance support | Requests remaining shown live in header |
+| Investigation workflow | Strong fetching layer | Adds **case board**, watch snapshots/diff, export packs |
+| Analysis extras | Core Instagram fetches | **Risk score**, contacts pack, bio-link expander, timeline fusion, geo clusters, caption intel, comment network, graph overlap, cost planner |
+| Design | Terminal / utility feel | Blue investigation workspace built for operators |
+
+### Why Osinsta is more advanced
+
+1. **Operator workflow, not just API wrappers** — multi-select → report → download is how investigations are actually documented.
+2. **Private-aware by design** — doesn’t pretend every command works on locked profiles; filters the toolkit instead of failing late.
+3. **No Instagram session risk** — you never store IG passwords or fight 2FA/challenge loops just to start.
+4. **Enrichment layer on top of fetches** — contacts pack, risk heuristics, timeline/geo/caption intel, change detection.
+5. **Case memory** — save targets/findings into local cases; watch mode tracks profile changes over time.
+6. **Clearer product UX** — readable names, blue report UI, API key management page, live remaining requests.
+
+Osintgram is excellent as a data-fetching / AI-assisted lookup shell. **Osinsta is built as an investigation workspace on top of that concept.**
+
+---
+
+## How to get a HikerAPI token
+
+Osinsta uses [HikerAPI](https://hikerapi.com) as the Instagram data backend.
+
+1. Open **[https://hikerapi.com](https://hikerapi.com)**
+2. Create an account / sign in
+3. Go to your dashboard / API section and **create or copy your API token**
+4. Check billing / balance so you have requests available: **[https://hikerapi.com/billing](https://hikerapi.com/billing)**
+5. Put the token into Osinsta using any one method:
+
+```bash
+# Option A — CLI
+python -m osinsta set-token YOUR_HIKERAPI_TOKEN
+
+# Option B — environment variable
+export HIKERAPI_TOKEN=YOUR_HIKERAPI_TOKEN
+
+# Option C — config file
+cp config/credentials.ini.example config/credentials.ini
+# then set: hikerapi_token = YOUR_HIKERAPI_TOKEN
+```
+
+6. Or in the web UI: open **http://127.0.0.1:8787/settings**, paste the key, **Verify & update**
+
+The header shows a **masked** key and **requests remaining**. If requests hit `0`, top up at HikerAPI billing before running more lookups.
+
+---
 
 ## Features
 
@@ -38,7 +97,9 @@ Osinsta is built for investigators who want **Osintgram-style Instagram OSINT** 
 | Network | Followers, following, compare, tag/comment networks |
 | Content | Hashtags, captions, geotags, likes/comments, posting schedule |
 | Advanced | Private-safe scan, contacts pack, risk score, timeline, geo clusters, watch mode, export |
-| Workspace | Multi-select UI, blue investigation theme, API key settings page, request balance |
+| Workspace | Multi-select UI, blue theme, API key settings page, request balance, report download |
+
+---
 
 ## Quick start
 
@@ -49,10 +110,7 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 
-# Save HikerAPI key (https://hikerapi.com)
 python -m osinsta set-token YOUR_HIKERAPI_TOKEN
-
-# Web UI
 python -m osinsta --web
 # → http://127.0.0.1:8787
 ```
@@ -76,10 +134,10 @@ python -m osinsta -t someuser -c export_report
 ## Web UI
 
 1. Open **http://127.0.0.1:8787**
-2. Click the masked **API key** chip to open settings / update key
+2. Click the masked **API key** chip → settings page to update/verify key
 3. Enter a target, choose **Public** or **Private**
 4. Multi-select lookups → **Run selected**
-5. Download the investigation report (HTML / JSON)
+5. Download the investigation report (**HTML** / **JSON**)
 
 ## Config
 
